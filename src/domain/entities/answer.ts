@@ -12,10 +12,10 @@ export class Answer {
   public authorId: string
   public questionId: string
 
-  constructor({authorId, content, questionId}:AnswerProps, id?: string){
+  constructor(props:AnswerProps, id?: string){
     this.id = id ??  randomUUID()
-    this.authorId = authorId
-    this.questionId = questionId
-    this.content = content
+    this.authorId = props.authorId
+    this.questionId = props.questionId
+    this.content = props.content
   }
 }
