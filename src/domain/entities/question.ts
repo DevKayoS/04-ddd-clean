@@ -9,17 +9,10 @@ interface QuestionProps {
   slug: Slug
 }
 
-export class Question extends Entity{
-  public title: string
-  public slug: Slug
-  public content: string
-  public authorId: string
+export class Question extends Entity<QuestionProps>{
+  
 
   constructor(props: QuestionProps, id?: string ){
-    super(id)
-    this.title = props.title
-    this.slug = props.slug
-    this.content = props.content
-    this.authorId = props.authorId
+    super(props, id)
   }
 }
