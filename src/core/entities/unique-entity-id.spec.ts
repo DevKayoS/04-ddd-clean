@@ -1,4 +1,3 @@
-import {expect, test} from 'vitest'
 import { UniqueEntityId } from './unique-entity-id'
 
 test('it should be able to create a unique id', ()=> {
