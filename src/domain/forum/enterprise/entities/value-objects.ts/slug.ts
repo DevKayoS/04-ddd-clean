@@ -4,6 +4,10 @@ export class Slug {
   private constructor(value: string) {
     this.value = value
   }
+
+  static create(slug: string){
+    return new Slug(slug)
+  }
   /**
    *  Receives a tring and normalize it as  a slug.
    *
