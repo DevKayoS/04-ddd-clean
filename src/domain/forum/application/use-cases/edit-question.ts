@@ -1,6 +1,5 @@
-import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { QuestionRepository } from '../repositories/question-repository'
 import { Question } from '../../enterprise/entities/question'
+import { QuestionRepository } from '../repositories/question-repository'
 
 interface EditQuestionUseCaseRequest {
   authorId: string
@@ -9,7 +8,9 @@ interface EditQuestionUseCaseRequest {
   content: string
 }
 
-interface EditQuestionUseCaseResponse {}
+interface EditQuestionUseCaseResponse {
+  question: Question
+}
 
 export class EditQuestionUseCase {
   constructor(private questionRepository: QuestionRepository) {}
