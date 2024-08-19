@@ -16,7 +16,7 @@ interface CommentOnQuestionUseCaseResponse {
 export class CommentOnQuestionUseCase {
   constructor(
     private questionRepository: QuestionRepository,
-    private questionCommentRepositoru: QuestionCommentRepository
+    private questionCommentRepository: QuestionCommentRepository
 
   ) {}
 
@@ -37,7 +37,7 @@ export class CommentOnQuestionUseCase {
       content
      })
 
-   await this.questionCommentRepositoru.create(questionComment)
+   await this.questionCommentRepository.create(questionComment)
 
    return {
     questionComment
