@@ -3,12 +3,12 @@ import { Optional } from '@/core/types/optional'
 import { Comment, CommentProps } from './comment'
 
 export interface AnswerCommentProps extends CommentProps {
-  asnwerId: UniqueEntityId  
+  answerId: UniqueEntityId  
 }
 
 export class AnswerComment extends Comment<AnswerCommentProps> {
   get answerId() {
-    return this.props.asnwerId
+    return this.props.answerId
   }
 
   static create(
