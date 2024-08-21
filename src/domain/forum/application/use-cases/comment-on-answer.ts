@@ -4,6 +4,7 @@ import { AnswerCommentRepository } from '../repositories/answers-comment-reposit
 import { AnswerComment } from '../../enterprise/entities/answer-comment'
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 interface CommentOnAnswerUseCaseRequest {
   authorId: string
@@ -15,7 +16,8 @@ type CommentOnAnswerUseCaseResponse = Either<
   ResourceNotFoundError, 
 {
   answerComment: AnswerComment
-}>
+}
+>
 
 export class CommentOnAnswerUseCase {
   constructor(
