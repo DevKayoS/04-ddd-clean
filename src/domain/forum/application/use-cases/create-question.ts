@@ -3,6 +3,7 @@ import { QuestionRepository } from '../repositories/question-repository'
 import { Question } from '../../enterprise/entities/question'
 import { Either, right } from '@/core/either'
 import { QuestionAttachment } from '../../enterprise/entities/question-attachment'
+import { QuestionAttachamentList } from '../../enterprise/entities/question-attachment-list'
 
 interface CreateQuestionUseCaseRequest {
   authorId: string
@@ -40,7 +41,7 @@ export class CreateQuestionUseCase {
       })
     })
     
-    question.attachment = questionAttachment
+    question.attachment = new QuestionAttachamentList(questionAttachment)
     
    await this.questionRepository.create(question)
 
