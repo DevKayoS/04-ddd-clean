@@ -3,13 +3,17 @@ import { DeleteQuestionUseCase } from './delete-question'
 import { makeQuestion } from 'test/factories/make-question'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { NotAllowedError } from './errors/not-allowed-error'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachment-repository'
+import { makeQuestionAttachments } from 'test/factories/make-question-attachment'
 
 let inMemoryQuestionRepository: InMemoryQuestionRepository
+let inMememoryQuestionAttachmentRepository: InMemoryQuestionAttachmentsRepository
 let sut: DeleteQuestionUseCase
 
 describe('Delete an question', ()=> {
   beforeEach(()=> {
-    inMemoryQuestionRepository = new  InMemoryQuestionRepository()
+    inMememoryQuestionAttachmentRepository = new  InMemoryQuestionAttachmentsRepository()
+    inMemoryQuestionRepository = new  InMemoryQuestionRepository(inMememoryQuestionAttachmentRepository)
     sut = new DeleteQuestionUseCase(inMemoryQuestionRepository)
   })
 
@@ -20,12 +24,24 @@ describe('Delete an question', ()=> {
     }, new UniqueEntityId('question-1'))
 
     await inMemoryQuestionRepository.create(question)
+    
+    inMememoryQuestionAttachmentRepository.items.push(
+      makeQuestionAttachments({
+        questionId: question.id,
+        attachmentId: new UniqueEntityId('1')
+      }),
+      makeQuestionAttachments({
+        questionId: question.id,
+        attachmentId: new UniqueEntityId('2')
+      }),
+    )
     await sut.execute({ 
       questionId: question.id.toString(),
       authorId: question.authorId.toString()
     })
     
     expect(inMemoryQuestionRepository.items).toHaveLength(0)
+    expect(inMememoryQuestionAttachmentRepository.items).toHaveLength(0)
   })
 
   it('should not be able to delete a question from another user', async () => {

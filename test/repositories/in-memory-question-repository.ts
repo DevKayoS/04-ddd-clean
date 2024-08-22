@@ -1,11 +1,16 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { PaginationParams } from "@/core/repositories/pagination-params";
+import { QuestionAttachmentsRepository } from "@/domain/forum/application/repositories/question-attachaments-repository";
 import { QuestionRepository } from "@/domain/forum/application/repositories/question-repository";
 import { Question } from "@/domain/forum/enterprise/entities/question";
 import { a, b } from "vitest/dist/chunks/config.DCnyCTbs";
 
 export class InMemoryQuestionRepository implements QuestionRepository{
   public items: Question[] = []
+
+  constructor(
+    private questionAttachmentRepository: QuestionAttachmentsRepository
+  ){}
   
   async findById(id: string) {
     const question = this.items.find((item) => item.id.toString() === id)
@@ -45,5 +50,7 @@ export class InMemoryQuestionRepository implements QuestionRepository{
     const itemIndex = this.items.findIndex((item) => item.id === question.id)
     
     this.items.splice(itemIndex, 1)
+
+    this.questionAttachmentRepository.deleteManyByQuestionId(question.id.toString())
   }
 }

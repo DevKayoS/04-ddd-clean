@@ -1,4 +1,3 @@
-import { PaginationParams } from "@/core/repositories/pagination-params";
 import { QuestionAttachmentsRepository } from "@/domain/forum/application/repositories/question-attachaments-repository";
 import { QuestionAttachment } from "@/domain/forum/enterprise/entities/question-attachment";
 
@@ -10,5 +9,10 @@ export class InMemoryQuestionAttachmentsRepository implements QuestionAttachment
     const questionAttachment =  this.items.filter((item)=> item.questionId.toString() === questionId)
       
     return questionAttachment
+  }
+  async deleteManyByQuestionId(questionId: string,) {
+    const questionAttachment =  this.items.filter((item)=> item.questionId.toString() !== questionId)
+      
+    this.items = questionAttachment
   }
 }
